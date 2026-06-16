@@ -1,0 +1,11 @@
+# Environment files
+.env
+.env.*
+!.env.example
+backend/.env
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
