@@ -11,22 +11,20 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 groq_client = None
 gemini_model = None
 
-# Initialize Groq
-try:
-    from groq import Groq
-    groq_client = Groq(api_key=GROQ_API_KEY)
-    print("[AI] Groq client initialized.")
-except Exception as e:
-    print(f"[AI] Groq init failed: {e}")
+if GROQ_API_KEY:
+    try:
+        from groq import Groq
+        groq_client = Groq(api_key=GROQ_API_KEY)
+    except Exception:
+        groq_client = None
 
-# Initialize Gemini
-try:
-    import google.generativeai as genai
-    genai.configure(api_key=GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel('gemini-1.5-flash')
-    print("[AI] Gemini client initialized.")
-except Exception as e:
-    print(f"[AI] Gemini init failed: {e}")
+if GEMINI_API_KEY:
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=GEMINI_API_KEY)
+        gemini_model = genai.GenerativeModel('gemini-1.5-flash')
+    except Exception:
+        gemini_model = None
 
 
 def _call_ai(prompt: str, expect_json: bool = True) -> str:
@@ -41,17 +39,17 @@ def _call_ai(prompt: str, expect_json: bool = True) -> str:
                 max_tokens=4096,
             )
             return response.choices[0].message.content
-        except Exception as e:
-            print(f"[AI] Groq call failed: {e}, trying Gemini...")
+        except Exception:
+            pass
 
     if gemini_model:
         try:
             response = gemini_model.generate_content(prompt)
             return response.text
-        except Exception as e:
-            print(f"[AI] Gemini call failed: {e}")
+        except Exception:
+            pass
 
-    raise RuntimeError("All AI providers failed. Check your API keys.")
+    raise RuntimeError("AI provider configuration failed. Set GROQ_API_KEY or GEMINI_API_KEY.")
 
 
 def _extract_json(text: str):

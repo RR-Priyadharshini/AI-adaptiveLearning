@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { api } from '../api'
 import toast from 'react-hot-toast'
 import MonacoEditor from '@monaco-editor/react'
 import {
@@ -111,7 +111,7 @@ export default function CareerModule() {
     if (!careerGoal.trim()) { toast.error('Enter your career goal'); return }
     setLoadingSkills(true)
     try {
-      const res = await axios.post('/api/career/identify-skills', { career_goal: careerGoal })
+      const res = await api.post('/api/career/identify-skills', { career_goal: careerGoal })
       setCareerData(res.data)
       setStep(1)
       toast.success(`Found ${res.data.required_skills?.length} required skills!`)
@@ -129,7 +129,7 @@ export default function CareerModule() {
     try {
       const qs = {}
       for (const skill of careerData.required_skills) {
-        const res = await axios.post('/api/career/get-questions', {
+        const res = await api.post('/api/career/get-questions', {
           skill: skill.name,
           career_goal: careerGoal,
           skill_description: skill.description
@@ -156,7 +156,7 @@ export default function CareerModule() {
     const key = `${skill}_coding_${qId}`
     setRunning(p => ({ ...p, [key]: true }))
     try {
-      const res = await axios.post('/api/career/run-code', { code, stdin: '' })
+      const res = await api.post('/api/career/run-code', { code, stdin: '' })
       setCodeRuns(p => ({ ...p, [key]: res.data }))
     } catch {
       toast.error('Code execution failed')
@@ -169,7 +169,7 @@ export default function CareerModule() {
     setSubmitting(true)
     try {
       const skills = careerData.required_skills.map(s => s.name)
-      const res = await axios.post('/api/career/submit-assessment', {
+      const res = await api.post('/api/career/submit-assessment', {
         career_goal: careerGoal,
         required_skills: skills,
         answers,

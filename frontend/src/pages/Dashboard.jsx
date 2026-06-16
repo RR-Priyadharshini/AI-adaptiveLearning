@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import axios from 'axios'
+import { api } from '../api'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
   LineChart, Line, ResponsiveContainer
@@ -41,8 +41,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     Promise.all([
-      axios.get('/api/academic/report').catch(() => ({ data: null })),
-      axios.get('/api/career/report').catch(() => ({ data: null }))
+      api.get('/api/academic/report').catch(() => ({ data: null })),
+      api.get('/api/career/report').catch(() => ({ data: null }))
     ]).then(([ac, ca]) => {
       setAcademicData(ac.data)
       setCareerData(ca.data)

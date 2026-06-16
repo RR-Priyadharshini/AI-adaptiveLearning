@@ -21,8 +21,7 @@ def extract_pdf_text(file_bytes: bytes) -> str:
         for page in doc:
             text += page.get_text()
         return text[:5000]
-    except Exception as e:
-        print(f"[PDF] Extraction failed: {e}")
+    except Exception:
         return ""
 
 

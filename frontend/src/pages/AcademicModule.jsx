@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import axios from 'axios'
+import { api } from '../api'
 import toast from 'react-hot-toast'
 import { BookOpen, Upload, FileText, ChevronRight, CheckCircle, RotateCcw, Trophy } from 'lucide-react'
 
@@ -143,7 +143,7 @@ export default function AcademicModule() {
       formData.append('topic', topic)
       formData.append('content', textContent)
       if (file) formData.append('file', file)
-      const res = await axios.post('/api/academic/generate-quiz', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      const res = await api.post('/api/academic/generate-quiz', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       setQuiz(res.data.quiz)
       setAnswers({})
       setStep(1)
@@ -164,7 +164,7 @@ export default function AcademicModule() {
     }
     setSubmitting(true)
     try {
-      const res = await axios.post('/api/academic/submit-quiz', { subject, topic, quiz, answers })
+      const res = await api.post('/api/academic/submit-quiz', { subject, topic, quiz, answers })
       setResults(res.data)
       setStep(2)
       toast.success('Quiz submitted! Analyzing your answers...')

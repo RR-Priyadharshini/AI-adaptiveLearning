@@ -7,7 +7,7 @@ import { BookOpen, GraduationCap, Leaf, Mail, Lock, Eye, EyeOff, LogIn, Notebook
 function getErrorMessage(err) {
   if (err?.response?.data?.error) return err.response.data.error
   if (err?.code === 'ERR_NETWORK' || err?.message?.includes('Network Error')) {
-    return 'Unable to reach the backend API. Start the Flask server on port 5000 and try again.'
+    return 'Unable to reach the backend API. Check VITE_API_URL and try again.'
   }
   return 'Login failed. Please try again.'
 }

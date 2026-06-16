@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import axios from 'axios'
+import { api } from '../api'
 
 const AuthContext = createContext(null)
 
@@ -14,12 +14,12 @@ export function AuthProvider({ children }) {
     setToken(null)
     setUser(null)
     setLoading(false)
-    delete axios.defaults.headers.common['Authorization']
+    delete api.defaults.headers.common['Authorization']
   }, [])
 
   const login = useCallback(async (email, password) => {
     try {
-      const res = await axios.post('/api/auth/login', { email: email.trim(), password })
+      const res = await api.post('/api/auth/login', { email: email.trim(), password })
       const { access_token, user: u } = res.data
       localStorage.setItem('st_token', access_token)
       setToken(access_token)
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
 
   const register = useCallback(async (username, email, password, confirm = '') => {
     try {
-      const res = await axios.post('/api/auth/register', {
+      const res = await api.post('/api/auth/register', {
         username,
         email: email.trim(),
         password,
@@ -55,9 +55,9 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (!token) return
 
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-    axios.get('/api/auth/me')
+    api.get('/api/auth/me')
       .then(res => {
         setUser(res.data)
         setLoading(false)

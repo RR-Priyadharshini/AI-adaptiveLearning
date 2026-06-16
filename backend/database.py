@@ -1,19 +1,25 @@
 import sqlite3
 import os
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'studytrack.db')
+DB_PATH = os.getenv('DATABASE_PATH') or os.path.join(os.path.dirname(__file__), 'studytrack.db')
+
 
 def get_db():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=30)
     conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute('PRAGMA foreign_keys=ON')
     return conn
 
+
 def init_db():
+    db_dir = os.path.dirname(DB_PATH)
+    if db_dir:
+        os.makedirs(db_dir, exist_ok=True)
+
     conn = get_db()
+    conn.execute('PRAGMA journal_mode=DELETE')
     c = conn.cursor()
 
-    # Users table
     c.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,7 +30,6 @@ def init_db():
         )
     ''')
 
-    # Academic sessions table
     c.execute('''
         CREATE TABLE IF NOT EXISTS academic_sessions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +50,6 @@ def init_db():
         )
     ''')
 
-    # Career sessions table
     c.execute('''
         CREATE TABLE IF NOT EXISTS career_sessions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,7 +71,7 @@ def init_db():
 
     conn.commit()
     conn.close()
-    print("[DB] Database initialized successfully.")
+
 
 def get_user_by_email(email):
     conn = get_db()
@@ -75,11 +79,13 @@ def get_user_by_email(email):
     conn.close()
     return dict(user) if user else None
 
+
 def get_user_by_id(user_id):
     conn = get_db()
     user = conn.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
     conn.close()
     return dict(user) if user else None
+
 
 def update_user_password_hash(user_id, password_hash):
     conn = get_db()
@@ -89,6 +95,7 @@ def update_user_password_hash(user_id, password_hash):
     )
     conn.commit()
     conn.close()
+
 
 def create_user(username, email, password_hash):
     conn = get_db()
@@ -104,6 +111,7 @@ def create_user(username, email, password_hash):
     except sqlite3.IntegrityError as e:
         conn.close()
         raise e
+
 
 def save_academic_session(user_id, subject, topic, total_questions, score,
                           mcq_score, theory_score, short_score,
@@ -127,6 +135,7 @@ def save_academic_session(user_id, subject, topic, total_questions, score,
     conn.close()
     return session_id
 
+
 def get_academic_sessions(user_id):
     import json
     conn = get_db()
@@ -142,6 +151,7 @@ def get_academic_sessions(user_id):
         s['questions_data'] = json.loads(s['questions_data'] or '[]')
         sessions.append(s)
     return sessions
+
 
 def save_career_session(user_id, career_goal, required_skills, skill_scores,
                         overall_readiness, gap_analysis, roadmap,
@@ -169,6 +179,7 @@ def save_career_session(user_id, career_goal, required_skills, skill_scores,
     conn.commit()
     conn.close()
     return session_id
+
 
 def get_career_sessions(user_id):
     import json
