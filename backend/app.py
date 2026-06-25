@@ -72,3 +72,13 @@ def api_index():
 @app.route('/api/health', methods=['GET'])
 def health():
     return {'status': 'ok', 'app': 'StudyTrack API', 'version': '1.0.0'}
+
+import os
+
+@app.route("/api/debug-env", methods=["GET"])
+def debug_env():
+    return {
+        "groq_exists": bool(os.getenv("GROQ_API_KEY")),
+        "gemini_exists": bool(os.getenv("GEMINI_API_KEY")),
+        "jwt_exists": bool(os.getenv("JWT_SECRET_KEY"))
+    }, 200
