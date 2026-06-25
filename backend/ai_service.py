@@ -27,7 +27,7 @@ if GEMINI_API_KEY:
     try:
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
-        gemini_model = genai.GenerativeModel('gemini-1.5-flash')
+        gemini_model = genai.GenerativeModel('gemini-2.5-flash')
     except Exception as e:
         print("DEBUG Gemini init failed:", repr(e))
         traceback.print_exc()
