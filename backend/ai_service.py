@@ -1,12 +1,15 @@
 import os
 import json
 import re
+import traceback
 from dotenv import load_dotenv
 
 load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+print("DEBUG GROQ_API_KEY exists:", bool(GROQ_API_KEY))
+print("DEBUG GEMINI_API_KEY exists:", bool(GEMINI_API_KEY))
 
 groq_client = None
 gemini_model = None
@@ -15,7 +18,9 @@ if GROQ_API_KEY:
     try:
         from groq import Groq
         groq_client = Groq(api_key=GROQ_API_KEY)
-    except Exception:
+    except Exception as e:
+        print("DEBUG Groq init failed:", repr(e))
+        traceback.print_exc()
         groq_client = None
 
 if GEMINI_API_KEY:
@@ -23,7 +28,9 @@ if GEMINI_API_KEY:
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
         gemini_model = genai.GenerativeModel('gemini-1.5-flash')
-    except Exception:
+    except Exception as e:
+        print("DEBUG Gemini init failed:", repr(e))
+        traceback.print_exc()
         gemini_model = None
 
 
@@ -31,6 +38,7 @@ def _call_ai(prompt: str, expect_json: bool = True) -> str:
     """Call AI with Groq first, fallback to Gemini."""
     if groq_client:
         try:
+            print("DEBUG Trying Groq...")
             messages = [{"role": "user", "content": prompt}]
             response = groq_client.chat.completions.create(
                 model="llama-3.3-70b-versatile",
@@ -39,14 +47,19 @@ def _call_ai(prompt: str, expect_json: bool = True) -> str:
                 max_tokens=4096,
             )
             return response.choices[0].message.content
-        except Exception:
+        except Exception as e:
+            print("DEBUG Groq request failed:", repr(e))
+            traceback.print_exc()
             pass
 
     if gemini_model:
         try:
+            print("DEBUG Trying Gemini...")
             response = gemini_model.generate_content(prompt)
             return response.text
-        except Exception:
+        except Exception as e:
+            print("DEBUG Gemini request failed:", repr(e))
+            traceback.print_exc()
             pass
 
     raise RuntimeError("AI provider configuration failed. Set GROQ_API_KEY or GEMINI_API_KEY.")
