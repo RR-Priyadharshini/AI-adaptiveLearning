@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import AcademicModule from './pages/AcademicModule'
 import CareerModule from './pages/CareerModule'
+import LandingPage from './pages/LandingPage'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
@@ -32,7 +33,7 @@ function AppInner() {
     <>
       {user && <Navbar />}
       <Routes>
-        <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} replace />} />
+        <Route path="/" element={<PublicRoute><LandingPage /></PublicRoute>} />
         <Route path="/login"    element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
