@@ -175,7 +175,7 @@ export default function AcademicModule() {
     }
   }
 
-  const getScoreColor = (s) => s >= 75 ? 'var(--green)' : s >= 50 ? 'var(--amber)' : 'var(--red)'
+  const getScoreColor = (s) => s >= 75 ? 'var(--success)' : s >= 50 ? 'var(--warning)' : 'var(--danger)'
 
   const totalQuestions = (quiz?.mcqs?.length || 0) + (quiz?.theory_questions?.length || 0) + (quiz?.short_answer_questions?.length || 0)
 
@@ -225,8 +225,8 @@ export default function AcademicModule() {
               <input ref={fileRef} type="file" accept=".pdf,.txt" style={{ display:'none' }} onChange={e => handleFile(e.target.files[0])} />
               {file ? (
                 <>
-                  <FileText size={32} style={{ color:'var(--green)', marginBottom:'0.5rem' }} />
-                  <p style={{ color:'var(--green)', fontWeight:600, fontSize:'0.9rem' }}>{file.name}</p>
+<FileText size={32} style={{ color:'var(--success)', marginBottom:'0.5rem' }} />
+                    <p style={{ color:'var(--success)', fontWeight:600, fontSize:'0.9rem' }}>{file.name}</p>
                   <p style={{ color:'var(--text-muted)', fontSize:'0.75rem', marginTop:'0.25rem' }}>Click to change</p>
                 </>
               ) : (
@@ -310,7 +310,7 @@ export default function AcademicModule() {
               { label:'Overall', value: results.scores.overall, color: getScoreColor(results.scores.overall) },
               { label:'MCQ', value: results.scores.mcq, color: 'var(--primary)' },
               { label:'Theory', value: results.scores.theory, color: 'var(--secondary)' },
-              { label:'Short Answer', value: results.scores.short_answer, color: 'var(--amber)' },
+              { label:'Short Answer', value: results.scores.short_answer, color: 'var(--warning)' },
             ].map(({ label, value, color }) => (
               <div key={label} className="stat-card animate-fadeInUp" style={{ textAlign:'center' }}>
                 <div className="stat-value" style={{ color }}>{value.toFixed(0)}%</div>
@@ -340,7 +340,7 @@ export default function AcademicModule() {
                       <p style={{ fontSize:'0.8rem', color:'var(--text-muted)', marginBottom:'0.5rem', fontWeight:600 }}>SPECIFIC GAPS</p>
                       {Object.entries(results.specific_gaps).map(([c, desc]) => (
                         <div key={c} style={{ padding:'0.625rem', background:'var(--danger-soft)', borderRadius:'var(--radius-sm)', marginBottom:'0.375rem', border:'1px solid rgba(220,38,38,0.15)' }}>
-                          <span style={{ color:'var(--red)', fontWeight:600, fontSize:'0.8rem' }}>{c}:</span>
+                          <span style={{ color:'var(--danger)', fontWeight:600, fontSize:'0.8rem' }}>{c}:</span>
                           <span style={{ color:'var(--text-secondary)', fontSize:'0.8rem', marginLeft:'0.375rem' }}>{desc}</span>
                         </div>
                       ))}

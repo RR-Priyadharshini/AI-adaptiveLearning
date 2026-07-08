@@ -24,7 +24,7 @@ function WelcomeSection({ user, onNavigate }) {
         <button onClick={() => onNavigate('/academic')} className="btn btn-primary btn-lg" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <BookOpen size={18} /> Start Academic Quiz
         </button>
-        <button onClick={() => onNavigate('/career')} className="btn btn-cyan btn-lg" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <button onClick={() => onNavigate('/career')} className="btn btn-secondary btn-lg" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Target size={18} /> Start Career Assessment
         </button>
       </div>
@@ -34,12 +34,12 @@ function WelcomeSection({ user, onNavigate }) {
 
 function SummaryCard({ icon: Icon, label, value, color, index }) {
   const iconBg = {
-    'var(--primary)': 'var(--primary-soft)',
+    'var(--primary)': 'var(--accent-blue)',
     'var(--warning)': 'var(--warning-soft)',
     'var(--success)': 'var(--success-soft)'
   }
 
-  const bg = iconBg[color] || 'var(--primary-soft)'
+  const bg = iconBg[color] || 'var(--accent-blue)'
 
   return (
     <div className="summary-card animate-fadeInUp" style={{ '--delay': `${index * 0.08}s` }}>
@@ -62,7 +62,7 @@ function RecentActivityItem({ icon: Icon, title, score, date, onViewReport }) {
   return (
     <div className="activity-item">
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1 }}>
-        <div style={{ width: 36, height: 36, borderRadius: 12, background: 'var(--primary-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+        <div style={{ width: 36, height: 36, borderRadius: 12, background: 'var(--accent-lavender)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
           <Icon size={16} style={{ color: 'var(--primary)' }} />
         </div>
         <div style={{ flex: 1 }}>
@@ -85,7 +85,7 @@ function RecentActivity({ academicSessions, careerSessions, onViewReport }) {
     return (
       <div className="card activity-empty">
         <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
-          <div style={{ width: 64, height: 64, borderRadius: 16, background: 'var(--primary-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+          <div style={{ width: 64, height: 64, borderRadius: 16, background: 'var(--accent-lavender)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
             <Clock size={28} style={{ color: 'var(--primary)', opacity: 0.7 }} />
           </div>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
@@ -95,7 +95,7 @@ function RecentActivity({ academicSessions, careerSessions, onViewReport }) {
             <button onClick={() => onViewReport('academic')} className="btn btn-primary">
               <BookOpen size={16} /> Start Academic Quiz
             </button>
-            <button onClick={() => onViewReport('career')} className="btn btn-cyan">
+            <button onClick={() => onViewReport('career')} className="btn btn-secondary">
               <Target size={16} /> Start Career Assessment
             </button>
           </div>
@@ -180,7 +180,7 @@ export default function Dashboard() {
 
       <div className="summary-grid">
         <SummaryCard icon={BookOpen} label="Academic Sessions" value={academicData?.total_sessions || 0} color="var(--primary)" index={0} />
-        <SummaryCard icon={Briefcase} label="Career Assessments" value={careerData?.total_sessions || 0} color="var(--secondary)" index={1} />
+        <SummaryCard icon={Briefcase} label="Career Assessments" value={careerData?.total_sessions || 0} color="var(--primary)" index={1} />
         <SummaryCard icon={Trophy} label="Avg Academic Score" value={avgAcademicScore} color="var(--warning)" index={2} />
         <SummaryCard icon={Target} label="Career Readiness" value={careerReadiness} color="var(--success)" index={3} />
       </div>

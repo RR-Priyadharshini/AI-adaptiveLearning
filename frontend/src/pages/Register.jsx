@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
-import { BookOpen, GraduationCap, Leaf, Mail, Lock, User, Eye, EyeOff, UserPlus, NotebookPen } from 'lucide-react'
+import { Mail, Lock, User, Eye, EyeOff, UserPlus } from 'lucide-react'
 
 function InputField({ id, label, icon: Icon, type = 'text', placeholder, value, onChange, autoComplete }) {
   return (
@@ -96,77 +96,75 @@ export default function Register() {
 
   return (
     <div className="auth-layout">
-      <div className="auth-sidebar">
-        <div className="auth-brand">
-          <h1 className="auth-title">StudyTrack</h1>
-          <p className="auth-tagline">AI-powered academic growth and career readiness platform.</p>
-        </div>
-      </div>
-
       <div className="auth-content">
-        <div className="card auth-card">
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>Create account</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.25rem' }}>Join a focused academic learning and career readiness platform</p>
+        <div className="auth-card">
+          <h1 className="auth-title">StudyTrack</h1>
+          <p className="auth-tagline">AI-powered learning. Career-ready outcomes.</p>
 
-          {error && <div className="alert alert-error" style={{ marginBottom: '1rem' }}>{error}</div>}
+          <div className="card" style={{ marginTop: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>Create account</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.25rem' }}>Join a focused academic learning and career readiness platform</p>
 
-          <form onSubmit={handle} className="auth-form">
-            <InputField id="reg-username" label="Username" icon={User} placeholder="johndoe" value={form.username} onChange={value => updateField('username', value)} autoComplete="username" />
-            <InputField id="reg-email" label="Email address" icon={Mail} type="email" placeholder="you@example.com" value={form.email} onChange={value => updateField('email', value)} autoComplete="email" />
+            {error && <div className="alert alert-error" style={{ marginBottom: '1rem' }}>{error}</div>}
 
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <div className="input-wrapper">
-                <Lock size={16} className="input-icon" />
-                <input
-                  id="reg-password"
-                  type={showPwd ? 'text' : 'password'}
-                  className="form-input"
-                  placeholder="Min. 6 characters"
-                  value={form.password}
-                  onChange={e => updateField('password', e.target.value)}
-                  required
-                  autoComplete="new-password"
-                />
-                <button type="button" onClick={() => setShowPwd(p => !p)} className="pwd-toggle">
-                  {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
+            <form onSubmit={handle} className="auth-form">
+              <InputField id="reg-username" label="Username" icon={User} placeholder="johndoe" value={form.username} onChange={value => updateField('username', value)} autoComplete="username" />
+              <InputField id="reg-email" label="Email address" icon={Mail} type="email" placeholder="you@example.com" value={form.email} onChange={value => updateField('email', value)} autoComplete="email" />
+
+              <div className="form-group">
+                <label className="form-label">Password</label>
+                <div className="input-wrapper">
+                  <Lock size={16} className="input-icon" />
+                  <input
+                    id="reg-password"
+                    type={showPwd ? 'text' : 'password'}
+                    className="form-input"
+                    placeholder="Min. 6 characters"
+                    value={form.password}
+                    onChange={e => updateField('password', e.target.value)}
+                    required
+                    autoComplete="new-password"
+                  />
+                  <button type="button" onClick={() => setShowPwd(p => !p)} className="pwd-toggle">
+                    {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div className="form-group">
-              <label className="form-label">Confirm Password</label>
-              <div className="input-wrapper">
-                <Lock size={16} className="input-icon" />
-                <input
-                  id="reg-confirm"
-                  type={showPwd ? 'text' : 'password'}
-                  className="form-input"
-                  placeholder="Repeat password"
-                  value={form.confirm}
-                  onChange={e => updateField('confirm', e.target.value)}
-                  required
-                  autoComplete="new-password"
-                />
+              <div className="form-group">
+                <label className="form-label">Confirm Password</label>
+                <div className="input-wrapper">
+                  <Lock size={16} className="input-icon" />
+                  <input
+                    id="reg-confirm"
+                    type={showPwd ? 'text' : 'password'}
+                    className="form-input"
+                    placeholder="Repeat password"
+                    value={form.confirm}
+                    onChange={e => updateField('confirm', e.target.value)}
+                    required
+                    autoComplete="new-password"
+                  />
+                </div>
               </div>
-            </div>
 
-            {form.password && form.confirm && (
-              <div style={{ fontSize: '0.75rem', color: form.password === form.confirm ? 'var(--success)' : 'var(--danger)' }}>
-                {form.password === form.confirm ? 'Passwords match' : 'Passwords do not match'}
-              </div>
-            )}
+              {form.password && form.confirm && (
+                <div style={{ fontSize: '0.75rem', color: form.password === form.confirm ? 'var(--success)' : 'var(--danger)' }}>
+                  {form.password === form.confirm ? 'Passwords match' : 'Passwords do not match'}
+                </div>
+              )}
 
-            <button type="submit" id="reg-submit" className="btn btn-primary btn-lg" style={{ marginTop: '0.5rem' }} disabled={loading}>
-              {loading ? <><span className="spinner" /> Creating account...</> : <><UserPlus size={18} /> Create Account</>}
-            </button>
-          </form>
+              <button type="submit" id="reg-submit" className="btn btn-primary btn-lg" style={{ marginTop: '0.5rem' }} disabled={loading}>
+                {loading ? <><span className="spinner" /> Creating account...</> : <><UserPlus size={18} /> Create Account</>}
+              </button>
+            </form>
 
-          <div className="divider" />
-          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-            Already have an account?{' '}
-            <Link to="/login" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>Sign in</Link>
-          </p>
+            <div className="divider" />
+            <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+              Already have an account?{' '}
+              <Link to="/login" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>Sign in</Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

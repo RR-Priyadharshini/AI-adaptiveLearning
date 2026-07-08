@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
-import { BookOpen, GraduationCap, Leaf, Mail, Lock, Eye, EyeOff, LogIn, NotebookPen } from 'lucide-react'
+import { BookOpen, Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react'
 
 function getErrorMessage(err) {
   if (err?.response?.data?.error) return err.response.data.error
@@ -57,74 +57,72 @@ export default function Login() {
 
   return (
     <div className="auth-layout">
-      <div className="auth-sidebar">
-        <div className="auth-brand">
-          <h1 className="auth-title">StudyTrack</h1>
-          <p className="auth-tagline">AI-powered academic growth and career readiness platform.</p>
-        </div>
-      </div>
-
       <div className="auth-content">
-        <div className="card auth-card">
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>Welcome Back</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.25rem' }}>Sign in to continue your learning journey</p>
+        <div className="auth-card">
+          <h1 className="auth-title">StudyTrack</h1>
+          <p className="auth-tagline">AI-powered learning. Career-ready outcomes.</p>
 
-          {error && <div className="alert alert-error" style={{ marginBottom: '1rem' }}>{error}</div>}
+          <div className="card" style={{ marginTop: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>Welcome Back</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.25rem' }}>Sign in to continue your learning journey</p>
 
-          <form onSubmit={handle} className="auth-form">
-            <div className="form-group">
-              <label className="form-label">Email</label>
-              <div className="input-wrapper">
-                <Mail size={16} className="input-icon" />
-                <input
-                  type="email"
-                  className="form-input"
-                  placeholder="you@example.com"
-                  value={form.email}
-                  onChange={e => updateField('email', e.target.value)}
-                  required
-                  id="login-email"
-                  autoComplete="email"
-                />
+            {error && <div className="alert alert-error" style={{ marginBottom: '1rem' }}>{error}</div>}
+
+            <form onSubmit={handle} className="auth-form">
+              <div className="form-group">
+                <label className="form-label">Email</label>
+                <div className="input-wrapper">
+                  <Mail size={16} className="input-icon" />
+                  <input
+                    type="email"
+                    className="form-input"
+                    placeholder="you@example.com"
+                    value={form.email}
+                    onChange={e => updateField('email', e.target.value)}
+                    required
+                    id="login-email"
+                    autoComplete="email"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <div className="input-wrapper">
-                <Lock size={16} className="input-icon" />
-                <input
-                  type={showPwd ? 'text' : 'password'}
-                  className="form-input"
-                  placeholder="Enter your password"
-                  value={form.password}
-                  onChange={e => updateField('password', e.target.value)}
-                  required
-                  id="login-password"
-                  autoComplete="current-password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPwd(p => !p)}
-                  className="pwd-toggle"
-                >
-                  {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
+              <div className="form-group">
+                <label className="form-label">Password</label>
+                <div className="input-wrapper">
+                  <Lock size={16} className="input-icon" />
+                  <input
+                    type={showPwd ? 'text' : 'password'}
+                    className="form-input"
+                    placeholder="Enter your password"
+                    value={form.password}
+                    onChange={e => updateField('password', e.target.value)}
+                    required
+                    id="login-password"
+                    autoComplete="current-password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPwd(p => !p)}
+                    className="pwd-toggle"
+                  >
+                    {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <button type="submit" id="login-submit" className="btn btn-primary btn-lg" style={{ marginTop: '0.5rem' }} disabled={loading}>
-              {loading ? <><span className="spinner" /> Signing in...</> : <><LogIn size={18} /> Sign In</>}
-            </button>
-          </form>
+              <button type="submit" id="login-submit" className="btn btn-primary btn-lg" style={{ marginTop: '0.5rem' }} disabled={loading}>
+                {loading ? <><span className="spinner" /> Signing in...</> : <><LogIn size={18} /> Sign In</>}
+              </button>
+            </form>
 
-          <div className="divider" />
-          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-            Don't have an account?{' '}
-            <Link to="/register" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>
-              Create one free
-            </Link>
-          </p>
+            <div className="divider" />
+            <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+              Don't have an account?{' '}
+              <Link to="/register" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>
+                Create one free
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
