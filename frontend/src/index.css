@@ -1266,3 +1266,79 @@ textarea::placeholder {
     border-radius: 20px;
   }
 }
+
+.welcome-section {
+  margin-bottom: 2rem;
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: var(--card-solid);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(67, 48, 35, 0.06);
+  animation: fadeInUp 0.5s ease both;
+  animation-delay: var(--delay, 0s);
+}
+
+.summary-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 20px rgba(67, 48, 35, 0.09);
+  transform: translateY(-2px);
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: var(--bg-paper);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: var(--transition);
+}
+
+.activity-item:hover {
+  border-color: var(--border-strong);
+  background: rgba(255, 253, 249, 0.92);
+}
+
+.activity-empty {
+  background: var(--card);
+}
+
+@media (max-width: 1024px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .welcome-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .welcome-actions {
+    margin-top: 1rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
