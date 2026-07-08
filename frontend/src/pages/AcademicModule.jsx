@@ -24,10 +24,10 @@ function StepIndicator({ current }) {
 
 function MCQQuestion({ q, index, answer, onSelect, showResult }) {
   return (
-    <div className="card animate-fadeInUp" style={{ marginBottom:'1rem', animationDelay:`${index * 0.05}s` }}>
-      <div style={{ display:'flex', gap:'0.75rem', marginBottom:'1rem' }}>
-        <span style={{ background:'var(--grad-primary)', color:'#fff', width:26, height:26, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'0.75rem', fontWeight:700, flexShrink:0 }}>{index + 1}</span>
-        <p style={{ fontSize:'0.9rem', lineHeight:1.6 }}>{q.question}</p>
+    <div className="card animate-fadeInUp" style={{ marginBottom: '1rem', animationDelay: `${index * 0.05}s` }}>
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
+        <span style={{ background: 'var(--primary)', color: '#FFFFFF', width: 26, height: 26, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 600, flexShrink: 0 }}>{index + 1}</span>
+        <p style={{ fontSize: '0.9rem', lineHeight: 1.6 }}>{q.question}</p>
       </div>
       {q.options.map((opt, j) => {
         let cls = 'mcq-option'
@@ -37,15 +37,15 @@ function MCQQuestion({ q, index, answer, onSelect, showResult }) {
         } else if (opt === answer) cls += ' selected'
         return (
           <button key={j} className={cls} onClick={() => !showResult && onSelect(q.id, opt)}>
-            <span className="option-letter">{String.fromCharCode(65+j)}</span>
+            <span className="option-letter">{String.fromCharCode(65 + j)}</span>
             {opt.replace(/^[A-D]\)\s*/, '')}
           </button>
         )
       })}
       {showResult && q.explanation && (
-          <div className="alert alert-info" style={{ marginTop:'0.75rem', fontSize:'0.8rem' }}>
-            {q.explanation}
-          </div>
+        <div className="alert alert-info" style={{ marginTop: '0.75rem', fontSize: '0.8rem' }}>
+          {q.explanation}
+        </div>
       )}
     </div>
   )
@@ -53,10 +53,10 @@ function MCQQuestion({ q, index, answer, onSelect, showResult }) {
 
 function TheoryQuestion({ q, index, answer, onChange, result, showResult }) {
   return (
-    <div className="card animate-fadeInUp" style={{ marginBottom:'1rem', animationDelay:`${index * 0.05}s` }}>
-      <div style={{ display:'flex', gap:'0.75rem', marginBottom:'1rem', alignItems:'flex-start' }}>
-        <span style={{ background:'var(--grad-primary)', color:'#fff', width:26, height:26, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'0.75rem', fontWeight:700, flexShrink:0 }}>T</span>
-        <p style={{ fontSize:'0.9rem', lineHeight:1.6 }}>{q.question}</p>
+    <div className="card animate-fadeInUp" style={{ marginBottom: '1rem', animationDelay: `${index * 0.05}s` }}>
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'flex-start' }}>
+        <span style={{ background: 'var(--primary)', color: '#FFFFFF', width: 26, height: 26, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 600, flexShrink: 0 }}>T</span>
+        <p style={{ fontSize: '0.9rem', lineHeight: 1.6 }}>{q.question}</p>
       </div>
       <textarea
         className="form-textarea"
@@ -64,20 +64,20 @@ function TheoryQuestion({ q, index, answer, onChange, result, showResult }) {
         value={answer || ''}
         onChange={e => !showResult && onChange(q.id, e.target.value)}
         disabled={showResult}
-        style={{ minHeight:'120px' }}
+        style={{ minHeight: '120px' }}
       />
       {showResult && result && (
-        <div style={{ marginTop:'0.75rem' }}>
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'0.5rem' }}>
-            <span style={{ fontSize:'0.8rem', color:'var(--text-muted)' }}>Score</span>
-            <span style={{ fontWeight:700, color: result.score >= 60 ? 'var(--green)' : result.score >= 40 ? 'var(--amber)' : 'var(--red)' }}>{result.score.toFixed(0)}%</span>
+        <div style={{ marginTop: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Score</span>
+            <span style={{ fontWeight: 600, color: result.score >= 60 ? 'var(--success)' : result.score >= 40 ? 'var(--warning)' : 'var(--danger)' }}>{result.score.toFixed(0)}%</span>
           </div>
-          {result.feedback && <div className="alert alert-info" style={{ fontSize:'0.8rem' }}>{result.feedback}</div>}
+          {result.feedback && <div className="alert alert-info" style={{ fontSize: '0.8rem' }}>{result.feedback}</div>}
           {result.missed_points?.length > 0 && (
-            <div style={{ marginTop:'0.5rem' }}>
-              <p style={{ fontSize:'0.75rem', color:'var(--red)', marginBottom:'0.25rem' }}>Missed points:</p>
-              <ul style={{ paddingLeft:'1rem' }}>
-                {result.missed_points.slice(0,3).map((p,i) => <li key={i} style={{ fontSize:'0.78rem', color:'var(--text-secondary)', marginBottom:'0.15rem' }}>{p}</li>)}
+            <div style={{ marginTop: '0.5rem' }}>
+              <p style={{ fontSize: '0.75rem', color: 'var(--danger)', marginBottom: '0.25rem' }}>Missed points:</p>
+              <ul style={{ paddingLeft: '1rem' }}>
+                {result.missed_points.slice(0, 3).map((p, i) => <li key={i} style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.15rem' }}>{p}</li>)}
               </ul>
             </div>
           )}
@@ -89,10 +89,10 @@ function TheoryQuestion({ q, index, answer, onChange, result, showResult }) {
 
 function ShortQuestion({ q, index, answer, onChange, result, showResult }) {
   return (
-    <div className="card animate-fadeInUp" style={{ marginBottom:'1rem', animationDelay:`${index * 0.05}s` }}>
-      <div style={{ display:'flex', gap:'0.75rem', marginBottom:'0.75rem', alignItems:'flex-start' }}>
-        <span style={{ background:'linear-gradient(135deg,#D97706,#B45309)', color:'#fff', width:26, height:26, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'0.75rem', fontWeight:700, flexShrink:0 }}>S</span>
-        <p style={{ fontSize:'0.9rem', lineHeight:1.6 }}>{q.question}</p>
+    <div className="card animate-fadeInUp" style={{ marginBottom: '1rem', animationDelay: `${index * 0.05}s` }}>
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.75rem', alignItems: 'flex-start' }}>
+        <span style={{ background: 'var(--warning)', color: '#FFFFFF', width: 26, height: 26, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 600, flexShrink: 0 }}>S</span>
+        <p style={{ fontSize: '0.9rem', lineHeight: 1.6 }}>{q.question}</p>
       </div>
       <input
         type="text"
@@ -103,9 +103,9 @@ function ShortQuestion({ q, index, answer, onChange, result, showResult }) {
         disabled={showResult}
       />
       {showResult && result && (
-        <div style={{ marginTop:'0.5rem', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-          <span style={{ fontSize:'0.8rem', color:'var(--text-muted)' }}>{result.feedback}</span>
-          <span style={{ fontWeight:700, fontSize:'0.85rem', color: result.score >= 60 ? 'var(--green)' : 'var(--red)' }}>{result.score.toFixed(0)}%</span>
+        <div style={{ marginTop: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{result.feedback}</span>
+          <span style={{ fontWeight: 600, fontSize: '0.85rem', color: result.score >= 60 ? 'var(--success)' : 'var(--danger)' }}>{result.score.toFixed(0)}%</span>
         </div>
       )}
     </div>

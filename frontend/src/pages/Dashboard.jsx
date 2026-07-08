@@ -35,7 +35,6 @@ function WelcomeSection({ user, onNavigate }) {
 function SummaryCard({ icon: Icon, label, value, color, index }) {
   const iconBg = {
     'var(--primary)': 'var(--primary-soft)',
-    'var(--secondary)': 'var(--blue-soft)',
     'var(--warning)': 'var(--warning-soft)',
     'var(--success)': 'var(--success-soft)'
   }
@@ -43,7 +42,7 @@ function SummaryCard({ icon: Icon, label, value, color, index }) {
   const bg = iconBg[color] || 'var(--primary-soft)'
 
   return (
-    <div className="summary-card animate-fadeInUp" style={{ '--delay': `${index * 0.08}s`, borderColor: 'var(--border)' }}>
+    <div className="summary-card animate-fadeInUp" style={{ '--delay': `${index * 0.08}s` }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <div style={{ width: 42, height: 42, borderRadius: 16, background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Icon size={20} style={{ color }} />

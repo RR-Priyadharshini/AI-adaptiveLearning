@@ -8,13 +8,12 @@ function InputField({ id, label, icon: Icon, type = 'text', placeholder, value, 
   return (
     <div className="form-group">
       <label className="form-label">{label}</label>
-      <div style={{ position:'relative' }}>
-        <Icon size={16} style={{ position:'absolute', left:'0.875rem', top:'50%', transform:'translateY(-50%)', color:'var(--text-muted)', pointerEvents:'none' }} />
+      <div className="input-wrapper">
+        <Icon size={16} className="input-icon" />
         <input
           id={id}
           type={type}
           className="form-input"
-          style={{ paddingLeft:'2.5rem' }}
           placeholder={placeholder}
           value={value}
           onChange={e => onChange(e.target.value)}
@@ -96,25 +95,20 @@ export default function Register() {
   }
 
   return (
-    <div className="auth-shell">
-      <div className="auth-illustrations" aria-hidden="true">
-        <span className="illustration-card"><BookOpen size={24} /></span>
-        <span className="illustration-card"><NotebookPen size={24} /></span>
-        <span className="illustration-card"><Leaf size={24} /></span>
-        <span className="illustration-card"><GraduationCap size={24} /></span>
-      </div>
-
-      <div className="animate-fadeInUp" style={{ width:'100%', maxWidth:'460px' }}>
+    <div className="auth-layout">
+      <div className="auth-sidebar">
         <div className="auth-brand">
           <h1 className="auth-title">StudyTrack</h1>
-          <p className="auth-subtitle">AI-Based Adaptive Learning & Skill Gap Analysis System</p>
+          <p className="auth-tagline">AI-powered academic growth and career readiness platform.</p>
         </div>
+      </div>
 
+      <div className="auth-content">
         <div className="card auth-card">
-          <h2 style={{ fontSize:'1.25rem', marginBottom:'0.25rem' }}>Create account</h2>
-          <p style={{ color:'var(--text-muted)', fontSize:'0.875rem', marginBottom:'1.25rem' }}>Join a focused academic learning and career readiness platform</p>
+          <h2 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>Create account</h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.25rem' }}>Join a focused academic learning and career readiness platform</p>
 
-          {error && <div className="alert alert-error" style={{ marginBottom:'1rem' }}>{error}</div>}
+          {error && <div className="alert alert-error" style={{ marginBottom: '1rem' }}>{error}</div>}
 
           <form onSubmit={handle} className="auth-form">
             <InputField id="reg-username" label="Username" icon={User} placeholder="johndoe" value={form.username} onChange={value => updateField('username', value)} autoComplete="username" />
@@ -122,20 +116,19 @@ export default function Register() {
 
             <div className="form-group">
               <label className="form-label">Password</label>
-              <div style={{ position:'relative' }}>
-                <Lock size={16} style={{ position:'absolute', left:'0.875rem', top:'50%', transform:'translateY(-50%)', color:'var(--text-muted)', pointerEvents:'none' }} />
+              <div className="input-wrapper">
+                <Lock size={16} className="input-icon" />
                 <input
                   id="reg-password"
                   type={showPwd ? 'text' : 'password'}
                   className="form-input"
-                  style={{ paddingLeft:'2.5rem', paddingRight:'2.5rem' }}
                   placeholder="Min. 6 characters"
                   value={form.password}
                   onChange={e => updateField('password', e.target.value)}
                   required
                   autoComplete="new-password"
                 />
-                <button type="button" onClick={() => setShowPwd(p => !p)} style={{ position:'absolute', right:'0.875rem', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', cursor:'pointer', color:'var(--text-muted)' }}>
+                <button type="button" onClick={() => setShowPwd(p => !p)} className="pwd-toggle">
                   {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
@@ -143,13 +136,12 @@ export default function Register() {
 
             <div className="form-group">
               <label className="form-label">Confirm Password</label>
-              <div style={{ position:'relative' }}>
-                <Lock size={16} style={{ position:'absolute', left:'0.875rem', top:'50%', transform:'translateY(-50%)', color:'var(--text-muted)', pointerEvents:'none' }} />
+              <div className="input-wrapper">
+                <Lock size={16} className="input-icon" />
                 <input
                   id="reg-confirm"
                   type={showPwd ? 'text' : 'password'}
                   className="form-input"
-                  style={{ paddingLeft:'2.5rem' }}
                   placeholder="Repeat password"
                   value={form.confirm}
                   onChange={e => updateField('confirm', e.target.value)}
@@ -160,20 +152,20 @@ export default function Register() {
             </div>
 
             {form.password && form.confirm && (
-              <div style={{ fontSize:'0.75rem', color: form.password === form.confirm ? 'var(--success)' : 'var(--danger)' }}>
+              <div style={{ fontSize: '0.75rem', color: form.password === form.confirm ? 'var(--success)' : 'var(--danger)' }}>
                 {form.password === form.confirm ? 'Passwords match' : 'Passwords do not match'}
               </div>
             )}
 
-            <button type="submit" id="reg-submit" className="btn btn-primary btn-lg" style={{ marginTop:'0.5rem' }} disabled={loading}>
+            <button type="submit" id="reg-submit" className="btn btn-primary btn-lg" style={{ marginTop: '0.5rem' }} disabled={loading}>
               {loading ? <><span className="spinner" /> Creating account...</> : <><UserPlus size={18} /> Create Account</>}
             </button>
           </form>
 
           <div className="divider" />
-          <p style={{ textAlign:'center', color:'var(--text-muted)', fontSize:'0.875rem' }}>
+          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
             Already have an account?{' '}
-            <Link to="/login" style={{ color:'var(--primary)', textDecoration:'none', fontWeight:600 }}>Sign in</Link>
+            <Link to="/login" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>Sign in</Link>
           </p>
         </div>
       </div>
