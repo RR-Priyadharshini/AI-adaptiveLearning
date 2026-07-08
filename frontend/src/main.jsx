@@ -11,15 +11,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       position="top-right"
       toastOptions={{
         style: {
-          background: '#FFFDF9',
-          color: '#223A5E',
-          border: '1px solid rgba(118,96,78,0.16)',
+          background: '#FCFCFA',
+          color: '#171717',
+          border: '1px solid #E5E8E2',
           borderRadius: '12px',
           fontSize: '0.875rem',
-          boxShadow: '0 12px 30px rgba(67,48,35,0.12)',
+          boxShadow: '0 12px 30px rgba(110, 143, 90, 0.1)',
         },
-        success: { iconTheme: { primary: '#6F9B73', secondary: '#FFFDF9' } },
-        error:   { iconTheme: { primary: '#B8625A', secondary: '#FFFDF9' } },
+        success: { iconTheme: { primary: '#6E8F5A', secondary: '#FCFCFA' } },
+        error:   { iconTheme: { primary: '#EF4444', secondary: '#FCFCFA' } },
       }}
     />
   </BrowserRouter>
